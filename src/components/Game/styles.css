@@ -1,0 +1,9 @@
+.game {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    /* align-items: center;
+    align-content: center; */
+    background-color: aquamarine;
+    flex-grow: 2;
+}
