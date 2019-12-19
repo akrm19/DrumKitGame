@@ -1,27 +1,15 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './styles.css';
 
 const Key = (props) => {
-  const [keyPressed, setKeyPressed] = useState(false);
   const audioRef = useRef(null);
 
   useEffect(() => {
-    console.log('use effect is running');
-    window.addEventListener("keydown", onKeyPressed);
-    return () => {
-      window.removeEventListener("keydown", onKeyPressed);
+    if(props.playSound) {
+      audioRef.current.currentTime = 0; 
     }
-  }, [props.letter])
-
-  const onKeyPressed = e => {
-    console.log(props.sound);
-    console.log(e);
-    playSound();
-  }
-
-  const playSound = e => {
     audioRef.current.play();
-  }
+  },[props.playSound])
 
   return ( 
     <div data-key={props.keyNum} className="key">
