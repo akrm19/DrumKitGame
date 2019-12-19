@@ -1,10 +1,22 @@
 html {
   background: url('/images/backgroung.jpg') bottom center;
   background-size: cover;
-  height: 100%;
 }
 
-body,html {
+body, html {
     margin: 0;
     padding: 0;
+    height: 100vh;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 2;
 }
