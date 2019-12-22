@@ -80,13 +80,29 @@ const defaultKeyStatus = {
   l: false
 };
 
+/// Return a given number of random numbers 
+//that go up to 10 as the max value
+function getRandomNumOfSounds(numOfSounds, maxNumberVal = keys.length -1) {
+  let randSounds = [];
+  for(let i = 0; i < numOfSounds; i++) {
+    //Return X number of random numbers from 0 - maxNumberVal (8)
+    const randNum = Math.ceil(Math.random() * maxNumberVal)
+    randSounds.push(keys[randNum]); 
+  }
+  return randSounds;
+}
+
 const Game = () => {
-  const [keyStatus, setKeyStatus] = useState(defaultKeyStatus);
+  const tries = 3;
+  const numOfSoundsToGuess = 3;
+  const randomSounds = getRandomNumOfSounds(numOfSoundsToGuess);
+  const [errors, setNumOfErrors] = useState(0);
+  const [keysState, setKeysState] = useState(defaultKeyStatus);
 
   useEffect(() => {
     console.log('use effect is running!!!');
     const onKeyPressed = e => {
-      setKeyStatus(prev => {
+      setKeysState(prev => {
         if(prev.hasOwnProperty(e.key)){
           prev[e.key] = !prev[e.key];
         }
@@ -99,12 +115,24 @@ const Game = () => {
     }
   }, []);
 
+  const playSounds = (currentIndex) => {
+    if(currentIndex < randomSounds.length) {
+      let tempAudio = new Audio(randomSounds[currentIndex].sound);
+      tempAudio.load();
+      tempAudio.onended = (e) => {
+        playSounds(currentIndex + 1);
+      };
+      tempAudio.play();
+    }
+  }
+
   return ( 
     <div className="game">
       <div>Game Title Holder</div>
+      <audio onEnded={() => playSounds(1)} controls src={randomSounds[0].sound} />
       <div className="keys">
         {keys.map(k =>
-          <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keyStatus[k.letter]} />)}
+          <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} />)}
       </div>
       <div>Score Holder</div>
     </div>
