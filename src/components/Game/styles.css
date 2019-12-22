@@ -12,3 +12,27 @@
     align-items: center;
     justify-content: center;
   }
+
+  .audioPlayer {
+    background-color: thistle;
+    color: white;
+    margin-top: 3.5em;
+    margin-bottom: 1.5em;
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+  }
+
+  .audioPlayer span {
+    font-size: 1.5rem;
+    background-color: teal;
+    align-self: center;
+    padding-right: 1em;
+}
+
+.audioPlayer div {
+    font-size: 1.5rem;
+    background-color: teal;
+    height: inherit;
+    vertical-align: middle;
+}

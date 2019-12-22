@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import Key from '../Key';
+import Instructions from '../Instructions';
 import './styles.css';
 import boom from '../../assets/audio/boom.wav';
 import clap from '../../assets/audio/clap.wav';
@@ -117,19 +118,23 @@ const Game = () => {
 
   const playSounds = (currentIndex) => {
     if(currentIndex < randomSounds.length) {
-      let tempAudio = new Audio(randomSounds[currentIndex].sound);
-      tempAudio.load();
-      tempAudio.onended = (e) => {
+      let audio = new Audio(randomSounds[currentIndex].sound);
+      audio.load();
+      audio.onended = (e) => {
         playSounds(currentIndex + 1);
       };
-      tempAudio.play();
+      audio.play();
     }
   }
 
   return ( 
     <div className="game">
       <div>Game Title Holder</div>
-      <audio onEnded={() => playSounds(1)} controls src={randomSounds[0].sound} />
+      <Instructions />
+      <div className="audioPlayer">
+        <span>Click play to hear the sounds: </span>
+        <audio onEnded={() => playSounds(1)} controls src={randomSounds[0].sound} />
+      </div>
       <div className="keys">
         {keys.map(k =>
           <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} />)}
