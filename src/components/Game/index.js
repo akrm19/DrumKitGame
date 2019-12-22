@@ -135,7 +135,7 @@ const Game = () => {
         <span>Click play to hear the sounds: </span>
         <audio onEnded={() => playSounds(1)} controls src={randomSounds[0].sound} />
       </div>
-      <div className="keys">
+      <div className="game-keys">
         {keys.map(k =>
           <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} />)}
       </div>

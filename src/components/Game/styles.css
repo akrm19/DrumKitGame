@@ -4,13 +4,14 @@
     width: 100%;
 }
 
-.keys {
+.game-keys {
     display: flex;
     flex-direction: row;
     flex: 1;
     width: 100%;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
   }
 
   .audioPlayer {

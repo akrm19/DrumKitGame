@@ -29,8 +29,8 @@ const Key = (props) => {
 
   return ( 
     <div data-key={props.keyNum} className={keyClassName} onTransitionEnd={transitionEnded} >
-      <div className="kbd">{props.letter}</div>
-      <span className="sound">{props.soundName}</span>
+      <div className="key-letter">{props.letter}</div>
+      <span className="key-soundname">{props.soundName}</span>
       <audio ref={audioRef} data-key={props.keyNum} src={props.sound}></audio>
     </div>
    );
