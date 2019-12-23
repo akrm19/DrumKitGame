@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useRef, useCallback} from 'react';
 import Key from '../Key';
 import Instructions from '../Instructions';
+import GameCompletePanel from '../GameCompletedPanel';
 import './styles.css';
 import boom from '../../assets/audio/boom.wav';
 import clap from '../../assets/audio/clap.wav';
@@ -81,7 +82,14 @@ const defaultKeyStatus = {
   l: false
 };
 
-/// Return a given number of random numbers 
+const gameStates = {
+  NotStarted: 'notStarted',
+  InProgress: 'inProgress',
+  LostGame: 'lostGame',
+  WonGame: 'wonGame'
+}
+
+// Return a given number of random numbers 
 //that go up to 10 as the max value
 function getRandomNumOfSounds(numOfSounds, maxNumberVal = keys.length -1) {
   let randSounds = [];
@@ -94,20 +102,51 @@ function getRandomNumOfSounds(numOfSounds, maxNumberVal = keys.length -1) {
 }
 
 const Game = () => {
-  const tries = 3;
   const numOfSoundsToGuess = 3;
-  const randomSounds = getRandomNumOfSounds(numOfSoundsToGuess);
-  const [errors, setNumOfErrors] = useState(0);
+  const [gameStatus, setGameStatus] = useState(gameStates.NotStarted);
+  const [triesLeft, setTriesLeft] = useState(5);
+  const [currentGuessIdx, setCurrentGuessIdx] = useState(0);
+  const [randomSounds, setRandomSounds] = useState(getRandomNumOfSounds(numOfSoundsToGuess));
   const [keysState, setKeysState] = useState(defaultKeyStatus);
+
+  const handleGameKeyPress = useCallback((e) => {
+    console.log(`handleGameKeyPress: ${e.key}`);
+    if(gameStatus === gameStates.InProgress) {
+      const keyNumToGuess = randomSounds[currentGuessIdx].keyNum;
+      if(keyNumToGuess === e.keyCode) {
+        //Guessed correctly
+        console.log(`GUESSED ${keyNumToGuess} Correctly!!`);
+        if(currentGuessIdx + 1 >= randomSounds.length)
+          setGameStatus(gameStates.WonGame);
+        else
+          setCurrentGuessIdx(prev => prev + 1);
+      } else {
+        if(triesLeft > 1)
+          setTriesLeft(prev => prev - 1);
+        else
+          setGameStatus(gameStates.LostGame);
+      }
+    }
+  }, [gameStatus, currentGuessIdx, randomSounds, triesLeft]);
+
+  useEffect(() => {
+    console.log(`2nd UseEffect -- Registering!!!!!! handleGameKeyPress`);
+    //TODO : See if this is being registered many times
+    window.addEventListener("keydown", handleGameKeyPress);
+    return () => {
+      window.removeEventListener("keydown", handleGameKeyPress);
+    }
+  }, [handleGameKeyPress]);
 
   useEffect(() => {
     console.log('use effect is running!!!');
     const onKeyPressed = e => {
-      setKeysState(prev => {
-        if(prev.hasOwnProperty(e.key)){
-          prev[e.key] = !prev[e.key];
+      //update onPress Key CSS
+      setKeysState(prevKeyState => {
+        if(prevKeyState.hasOwnProperty(e.key)){
+          prevKeyState[e.key] = !prevKeyState[e.key];
         }
-        return {...prev};
+        return {...prevKeyState};
       })
     }
     window.addEventListener("keydown", onKeyPressed);
@@ -127,19 +166,34 @@ const Game = () => {
     }
   }
 
-  return ( 
-    <div className="game">
+  const handleStartGameClick = (e) => {
+    setGameStatus(gameStates.InProgress);
+  }
+
+  const resetGame = () => {
+    console.log(`RESETTING GAME!!!!`);
+  }
+
+  return (
+    <div className="game" >
       <div>Game Title Holder</div>
       <Instructions />
       <div className="audioPlayer">
-        <span>Click play to hear the sounds: </span>
+        <span>Click play to hear the sounds: <button onClick={handleStartGameClick} >Start game</button> </span>
         <audio onEnded={() => playSounds(1)} controls src={randomSounds[0].sound} />
       </div>
       <div className="game-keys">
         {keys.map(k =>
           <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} />)}
       </div>
-      <div>Score Holder</div>
+      <div className="game-triesLeft">
+        Guess the sounds. Tries Left: {triesLeft}
+      </div>
+      <div className="game-keys">
+        {randomSounds.map((k, idx) =>
+          <Key key={idx} letter={currentGuessIdx > idx || gameStatus === gameStates.WonGame ? k.letter : '?'} keyNum={k.keyNum} soundName={''} playSound={false} />)}
+      </div>
+      <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
     </div>
    );
 }

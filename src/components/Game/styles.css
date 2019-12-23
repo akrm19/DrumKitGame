@@ -14,6 +14,15 @@
     flex-wrap: wrap;
   }
 
+  .game-triesLeft {
+    color: white;
+    text-align: center;
+    background: rgba(77, 75, 75, 0.4);
+    font-size: 1.5em;
+    font-size: 3rem;
+    font-weight: bold;
+  }
+
   .audioPlayer {
     background-color: thistle;
     color: white;

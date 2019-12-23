@@ -20,10 +20,9 @@ const Key = (props) => {
   },[props.playSound])
 
   const transitionEnded = (e) => {
-    if(e.propertyName !== 'transform') return;
-    console.log(`Transition ended!`);
-    console.log(e);
-
+    if(e.propertyName !== 'transform') 
+      return;
+      
     setKeyClassName('key');
   }
 
