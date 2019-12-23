@@ -189,11 +189,11 @@ const Game = () => {
       <div className="game-triesLeft">
         Guess the sounds. Tries Left: {triesLeft}
       </div>
+      <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
       <div className="game-keys">
         {randomSounds.map((k, idx) =>
           <Key key={idx} letter={currentGuessIdx > idx || gameStatus === gameStates.WonGame ? k.letter : '?'} keyNum={k.keyNum} soundName={''} playSound={false} />)}
       </div>
-      <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
     </div>
    );
 }
