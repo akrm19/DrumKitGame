@@ -1,4 +1,5 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
+import {Animated} from 'react-animated-css';
 import Key from '../Key';
 import Instructions from '../Instructions';
 import GameCompletePanel from '../GameCompletedPanel';
@@ -204,6 +205,9 @@ const Game = () => {
         }
         <audio ref={audioRef} onEnded={() => playSounds(1)} src={randomSounds[0].sound} />
       </div>
+      <Animated animationIn='lightSpeedIn' animationOut="zoomOutDown" animationInDuration={3000} animationOutDuration={3000} isVisible={gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame}>
+        <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
+      </Animated>
       <div className="game-keys">
         {keys.map(k =>
           <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} />)}
@@ -211,6 +215,7 @@ const Game = () => {
       <div className="game-triesLeft">
         Guess the sounds. Tries Left: {triesLeft}
       </div>
+
       <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
       <div className="game-keys">
         {randomSounds.map((k, idx) =>
