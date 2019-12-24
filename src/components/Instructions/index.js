@@ -7,7 +7,7 @@ const Instructions = () => {
       <div className="instructions-title">Instructions</div>
       <ul>
         <li>
-          Get familiar with the sounds! Press the associated key or click on the items 
+          Get familiar with the sounds! Press the associated key or click on the key 
         </li>
         <li>
           Press play to hear the sounds.

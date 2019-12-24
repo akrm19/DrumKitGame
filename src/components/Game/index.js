@@ -103,6 +103,7 @@ function getRandomNumOfSounds(numOfSounds, maxNumberVal = keys.length -1) {
 
 const Game = () => {
   const numOfSoundsToGuess = 3;
+  const audioRef = useRef(null);
   const [gameStatus, setGameStatus] = useState(gameStates.NotStarted);
   const [triesLeft, setTriesLeft] = useState(5);
   const [currentGuessIdx, setCurrentGuessIdx] = useState(0);
@@ -123,8 +124,10 @@ const Game = () => {
       } else {
         if(triesLeft > 1)
           setTriesLeft(prev => prev - 1);
-        else
+        else {
+          setTriesLeft(0);
           setGameStatus(gameStates.LostGame);
+        }
       }
     }
   }, [gameStatus, currentGuessIdx, randomSounds, triesLeft]);
@@ -172,6 +175,11 @@ const Game = () => {
 
   const resetGame = () => {
     console.log(`RESETTING GAME!!!!`);
+    setGameStatus(gameStates.NotStarted);
+    setTriesLeft(5);
+    setCurrentGuessIdx(0);
+    setRandomSounds(getRandomNumOfSounds(numOfSoundsToGuess));
+    setKeysState(defaultKeyStatus);
   }
 
   return (
