@@ -16,7 +16,7 @@ const Instructions = () => {
           Try to guess the correct sounds and order wihtout exceeding the number of tries.
         </li>
         <li>
-          Celebrate your awesomeness or gallow in pity of your failure.
+          Celebrate your awesomeness or wallow in pity of your failure.
         </li>
       </ul>
     </div>

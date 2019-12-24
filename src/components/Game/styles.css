@@ -17,16 +17,31 @@
   .game-triesLeft {
     color: white;
     text-align: center;
-    background: rgba(77, 75, 75, 0.4);
+    background: rgba(77, 75, 75, 0.5);
     font-size: 1.5em;
     font-size: 3rem;
     font-weight: bold;
   }
 
+  .hide {
+      display: none;
+      visibility: hidden;
+  }
+
+  .game-button {
+    border: .2rem solid black;
+    background-color: #ffc600;
+    font-weight: bolder;
+    font-size: 1.5rem;
+    color: black;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+
   .audioPlayer {
     background: rgba(77, 75, 75, 0.8);
     padding: .5em;
-    border-radius: 20px;
+    border-radius: 10px;
     color: white;
     margin-top: 3.5em;
     margin-bottom: 1.5em;
@@ -44,7 +59,6 @@
 
 .audioPlayer div {
     font-size: 1.5rem;
-    background-color: teal;
     height: inherit;
     vertical-align: middle;
 }

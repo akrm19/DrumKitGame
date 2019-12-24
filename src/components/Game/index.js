@@ -109,6 +109,7 @@ const Game = () => {
   const [currentGuessIdx, setCurrentGuessIdx] = useState(0);
   const [randomSounds, setRandomSounds] = useState(getRandomNumOfSounds(numOfSoundsToGuess));
   const [keysState, setKeysState] = useState(defaultKeyStatus);
+  const [playingSounds, setPlayingSounds] = useState(false);
 
   const handleGameKeyPress = useCallback((e) => {
     console.log(`handleGameKeyPress: ${e.key}`);
@@ -166,11 +167,19 @@ const Game = () => {
         playSounds(currentIndex + 1);
       };
       audio.play();
-    }
+    } else
+      setPlayingSounds(false);
   }
 
   const handleStartGameClick = (e) => {
     setGameStatus(gameStates.InProgress);
+    setPlayingSounds(true);
+    audioRef.current.play();
+  }
+
+  const handlePlaySoudsClick = (e) => {
+    setPlayingSounds(true);
+    audioRef.current.play();
   }
 
   const resetGame = () => {
@@ -186,9 +195,14 @@ const Game = () => {
     <div className="game" >
       <div>Game Title Holder</div>
       <Instructions />
-      <div className="audioPlayer">
-        <span>Click play to hear the sounds: <button onClick={handleStartGameClick} >Start game</button> </span>
-        <audio onEnded={() => playSounds(1)} controls src={randomSounds[0].sound} />
+      <div className="audioPlayer" >
+        {gameStatus === gameStates.NotStarted &&
+          <button className="game-button" onClick={handleStartGameClick} disabled={playingSounds} >{playingSounds ? 'Playing sounds...' : 'Start game'}</button> 
+        }
+        {gameStatus !== gameStates.NotStarted &&
+          <button className="game-button" onClick={handlePlaySoudsClick} disabled={playingSounds} >{playingSounds ? 'Playing sounds...' : 'Repeat Sounds'}</button>
+        }
+        <audio ref={audioRef} onEnded={() => playSounds(1)} src={randomSounds[0].sound} />
       </div>
       <div className="game-keys">
         {keys.map(k =>
