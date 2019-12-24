@@ -1,5 +1,7 @@
 import React from 'react';
 import './styles.css';
+import clap from '../../assets/audio/clap.wav';
+import DuckHunt from '../../assets/gifs/giphy.gif';
 
 const GameCompletePanel = (props) => {
   return ( 
@@ -14,7 +16,9 @@ const GameCompletePanel = (props) => {
     {props.lostGame &&
       <div className="gameCompletePanel lostGame"> 
         <div>Sorry you lost!</div>
-        <br /> <br />
+        <br /> 
+        <img src={DuckHunt} alt="DuckHunt Dog" />
+        <br />
         <button className="game-button" onClick={props.restartGame} >Try Again</button>
       </div>
     }

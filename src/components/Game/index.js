@@ -197,7 +197,6 @@ const Game = () => {
 
   return (
     <div className="game" >
-      <div>Game Title Holder</div>
       <Instructions />
       <div className="audioPlayer" >
         {gameStatus === gameStates.NotStarted &&
