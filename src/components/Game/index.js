@@ -1,12 +1,6 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {Animated} from 'react-animated-css';
-import Button from '@material-ui/core/Button';
-import RefreshIcon from '@material-ui/icons/Refresh';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Key from '../Key';
 import Instructions from '../Instructions';
 import GameCompletePanel from '../GameCompletedPanel';
@@ -200,8 +194,6 @@ const Game = () => {
   }
 
   const wonOrLostGame = gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame;
-  const gameEndedTitle = gameStatus === gameStates.WonGame ? 'You won' : 'You lost';
-  const gameEndedText = gameStatus === gameStates.WonGame ? 'You won more text here' : 'You lost more text';
 
   return (
     <div className="game" >
@@ -237,47 +229,6 @@ const Game = () => {
           <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
         </Animated>
       </Dialog>
-      {/* <Dialog
-        open={wonOrLostGame}
-        onClose={resetGame}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <Animated animationIn='lightSpeedIn' animationOut="zoomOutDown" animationInDuration={3000} animationOutDuration={3000} isVisible={gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame}>
-          <DialogTitle id="alert-dialog-title">{gameEndedTitle}</DialogTitle>
-          <DialogContent>
-            <DialogContentText id="alert-dialog-description">
-              {gameEndedText}
-            </DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button variant="contained" startIcon={<RefreshIcon />} onClick={resetGame} >
-              Restart Game
-            </Button>
-          </DialogActions>
-        </Animated>
-      </Dialog> */}
-      {/* <Dialog
-        open={wonOrLostGame}
-        onClose={resetGame}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">{gameEndedTitle}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {gameEndedText}
-          </DialogContentText>
-          <Animated animationIn='lightSpeedIn' animationOut="zoomOutDown" animationInDuration={3000} animationOutDuration={3000} isVisible={gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame}>
-            <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
-          </Animated>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="contained" startIcon={<RefreshIcon />} onClick={resetGame} >
-            Restart Game
-          </Button>
-        </DialogActions>
-      </Dialog> */}
     </div>
    );
 }
