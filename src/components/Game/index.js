@@ -1,5 +1,12 @@
 import React, {useEffect, useState, useRef, useCallback} from 'react';
 import {Animated} from 'react-animated-css';
+import Button from '@material-ui/core/Button';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Key from '../Key';
 import Instructions from '../Instructions';
 import GameCompletePanel from '../GameCompletedPanel';
@@ -192,6 +199,10 @@ const Game = () => {
     setKeysState(defaultKeyStatus);
   }
 
+  const wonOrLostGame = gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame;
+  const gameEndedTitle = gameStatus === gameStates.WonGame ? 'You won' : 'You lost';
+  const gameEndedText = gameStatus === gameStates.WonGame ? 'You won more text here' : 'You lost more text';
+
   return (
     <div className="game" >
       <div>Game Title Holder</div>
@@ -205,9 +216,6 @@ const Game = () => {
         }
         <audio ref={audioRef} onEnded={() => playSounds(1)} src={randomSounds[0].sound} />
       </div>
-      <Animated animationIn='lightSpeedIn' animationOut="zoomOutDown" animationInDuration={3000} animationOutDuration={3000} isVisible={gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame}>
-        <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
-      </Animated>
       <div className="game-keys">
         {keys.map(k =>
           <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} />)}
@@ -215,12 +223,61 @@ const Game = () => {
       <div className="game-triesLeft">
         Guess the sounds. Tries Left: {triesLeft}
       </div>
-
-      <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
       <div className="game-keys">
         {randomSounds.map((k, idx) =>
           <Key key={idx} letter={currentGuessIdx > idx || gameStatus === gameStates.WonGame ? k.letter : '?'} keyNum={k.keyNum} soundName={''} playSound={false} />)}
       </div>
+      <Dialog
+        open={wonOrLostGame}
+        onClose={resetGame}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <Animated animationIn='lightSpeedIn' animationOut="zoomOutDown" animationInDuration={3000} animationOutDuration={3000} isVisible={gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame}>
+          <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
+        </Animated>
+      </Dialog>
+      {/* <Dialog
+        open={wonOrLostGame}
+        onClose={resetGame}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <Animated animationIn='lightSpeedIn' animationOut="zoomOutDown" animationInDuration={3000} animationOutDuration={3000} isVisible={gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame}>
+          <DialogTitle id="alert-dialog-title">{gameEndedTitle}</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {gameEndedText}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button variant="contained" startIcon={<RefreshIcon />} onClick={resetGame} >
+              Restart Game
+            </Button>
+          </DialogActions>
+        </Animated>
+      </Dialog> */}
+      {/* <Dialog
+        open={wonOrLostGame}
+        onClose={resetGame}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{gameEndedTitle}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {gameEndedText}
+          </DialogContentText>
+          <Animated animationIn='lightSpeedIn' animationOut="zoomOutDown" animationInDuration={3000} animationOutDuration={3000} isVisible={gameStatus === gameStates.WonGame || gameStatus === gameStates.LostGame}>
+            <GameCompletePanel wonGame={gameStatus === gameStates.WonGame} lostGame={gameStatus === gameStates.LostGame} restartGame={resetGame} />
+          </Animated>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="contained" startIcon={<RefreshIcon />} onClick={resetGame} >
+            Restart Game
+          </Button>
+        </DialogActions>
+      </Dialog> */}
     </div>
    );
 }

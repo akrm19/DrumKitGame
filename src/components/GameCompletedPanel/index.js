@@ -16,18 +16,16 @@ const GameCompletePanel = (props) => {
     <div>
     {props.wonGame &&
       <div className="gameCompletePanel wonGame">
-        <div>You won the game!! </div>
-        <Button variant="contained" startIcon={<RefreshIcon />} onClick={props.restartGame} >
-          Restart Game
-        </Button>
+        <div>You won the game!</div>
+        <br /> <br />
+        <button className="game-button" onClick={props.restartGame} >Keep Crushing It!</button>
       </div>
     }
     {props.lostGame &&
       <div className="gameCompletePanel lostGame"> 
-        <div>Sorry you lost!!! </div>
-        <Button variant="contained" startIcon={<RefreshIcon />} onClick={props.restartGame} >
-          Restart Game
-        </Button>
+        <div>Sorry you lost!</div>
+        <br /> <br />
+        <button className="game-button" onClick={props.restartGame} >Try Again</button>
       </div>
     }
     </div>

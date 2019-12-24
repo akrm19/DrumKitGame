@@ -1,8 +1,17 @@
 .gameCompletePanel {
+    padding: 2rem;
     color: white;
     text-align: center;
-    background: rgba(77, 75, 75, 0.4);
     font-size: 1.5em;
     font-size: 3rem;
-    font-weight: bold;  
+    font-weight: bold; 
+    border: .4rem solid #fcf4d9;
+}
+
+.wonGame {
+    background-color: green;
+}
+
+.lostGame {
+    background-color: slategray;
 }
