@@ -8,6 +8,11 @@
     border: .4rem solid #fcf4d9;
 }
 
+.gameCompletePanel img {
+    height: auto;
+    max-width: 90%;
+}
+
 .wonGame {
     background-color: green;
 }
