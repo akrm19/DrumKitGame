@@ -7,7 +7,7 @@
 .game-keys {
     display: flex;
     flex-direction: row;
-    flex: 1;
+    /* flex: 1; This causes an issue w/safari*/
     width: 100%;
     align-items: center;
     justify-content: center;
@@ -54,7 +54,6 @@
 
   .audioPlayer span {
     font-size: 1.5rem;
-    /* background-color: teal; */
     align-self: center;
     padding-right: 1em;
 }
