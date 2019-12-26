@@ -216,7 +216,7 @@ const Game = () => {
         <audio ref={audioRef} onEnded={() => playSounds(1)} src={randomSounds[0].sound} />
       </div>
       <div className="game-triesLeft">
-        Guess the sounds. Tries Left: {triesLeft}
+        Tries Left: {triesLeft}
       </div>
       <div className="game-keys">
         {randomSounds.map((k, idx) =>
