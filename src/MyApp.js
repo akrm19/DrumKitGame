@@ -7,15 +7,15 @@ import './MyApp.css';
 const MyApp = () => {
   return ( 
     <div className="app">
-      <header>
+      {/* <header>
         <Header />
-      </header>
+      </header> */}
       <div className="content" >
         <Game />
       </div>
-      <footer>
+      {/* <footer>
         <Footer/>
-      </footer> 
+      </footer>  */}
     </div>
   );
 }
