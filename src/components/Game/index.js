@@ -202,6 +202,10 @@ const Game = () => {
   return (
     <div className="game" >
       <Instructions />
+      <div className="game-keys">
+        {keys.map(k =>
+          <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} onKeyClicked={processKeySelected} />)}
+      </div>
       <div className="audioPlayer" >
         {gameStatus === gameStates.NotStarted &&
           <button className="game-button" onClick={handleStartGameClick} disabled={playingSounds} >{playingSounds ? 'Playing sounds...' : 'Start game'}</button> 
@@ -210,10 +214,6 @@ const Game = () => {
           <button className="game-button" onClick={handlePlaySoudsClick} disabled={playingSounds} >{playingSounds ? 'Playing sounds...' : 'Repeat Sounds'}</button>
         }
         <audio ref={audioRef} onEnded={() => playSounds(1)} src={randomSounds[0].sound} />
-      </div>
-      <div className="game-keys">
-        {keys.map(k =>
-          <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} onKeyClicked={processKeySelected} />)}
       </div>
       <div className="game-triesLeft">
         Guess the sounds. Tries Left: {triesLeft}
