@@ -113,11 +113,11 @@ const Game = () => {
   const [keysState, setKeysState] = useState(defaultKeyStatus);
   const [playingSounds, setPlayingSounds] = useState(false);
 
-  const handleGameKeyPress = useCallback((e) => {
-    console.log(`handleGameKeyPress: ${e.key}`);
+  const processKeySelected = useCallback((keyCode) => {
+    //console.log(`handleGameKeyPress: ${e.key}`);
     if(gameStatus === gameStates.InProgress) {
       const keyNumToGuess = randomSounds[currentGuessIdx].keyNum;
-      if(keyNumToGuess === e.keyCode) {
+      if(keyNumToGuess === keyCode) {
         //Guessed correctly
         console.log(`GUESSED ${keyNumToGuess} Correctly!!`);
         if(currentGuessIdx + 1 >= randomSounds.length)
@@ -132,17 +132,21 @@ const Game = () => {
           setGameStatus(gameStates.LostGame);
         }
       }
-    }
+    }  
   }, [gameStatus, currentGuessIdx, randomSounds, triesLeft]);
+
+  const handleKeyboardKeyPress = useCallback((e) => {
+    processKeySelected(e.keyCode);
+  }, [processKeySelected]);
 
   useEffect(() => {
     console.log(`2nd UseEffect -- Registering!!!!!! handleGameKeyPress`);
     //TODO : See if this is being registered many times
-    window.addEventListener("keydown", handleGameKeyPress);
+    window.addEventListener("keydown", handleKeyboardKeyPress);
     return () => {
-      window.removeEventListener("keydown", handleGameKeyPress);
+      window.removeEventListener("keydown", handleKeyboardKeyPress);
     }
-  }, [handleGameKeyPress]);
+  }, [handleKeyboardKeyPress]);
 
   useEffect(() => {
     console.log('use effect is running!!!');
@@ -209,7 +213,7 @@ const Game = () => {
       </div>
       <div className="game-keys">
         {keys.map(k =>
-          <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} />)}
+          <Key key={k.keyNum} letter={k.letter} keyNum={k.keyNum} soundName={k.soundName} sound={k.sound} playSound={keysState[k.letter]} onKeyClicked={processKeySelected} />)}
       </div>
       <div className="game-triesLeft">
         Guess the sounds. Tries Left: {triesLeft}
