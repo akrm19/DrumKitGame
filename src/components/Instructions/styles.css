@@ -6,10 +6,19 @@
 
 .instructions ul {
     list-style-type: none;
-    font-size: 1.5em;
+    font-size: 1.5rem;
+    margin: 0;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 1.2rem;
+    padding-bottom: 1.2rem;
+}
+
+.instructions li {
+    padding-top: .3rem;
 }
 
 .instructions-title {
-    font-size: 5rem;
-    font-weight: bold;
+    font-size: 4rem;
+    font-weight: 400;
 }
