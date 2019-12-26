@@ -37,7 +37,7 @@ const keys = [
   {
     letter: 'f',
     keyNum: 70,
-    soundName: 'OpenHat',
+    soundName: 'Openhat',
     sound: openhat,
   },
   {
@@ -67,7 +67,7 @@ const keys = [
   {
     letter: 'l',
     keyNum: 76,
-    soundName: 'HiHat',
+    soundName: 'tink',
     sound: tink,
   }
 ];
