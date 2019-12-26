@@ -114,7 +114,6 @@ const Game = () => {
   const [playingSounds, setPlayingSounds] = useState(false);
 
   const processKeySelected = useCallback((keyCode) => {
-    //console.log(`handleGameKeyPress: ${e.key}`);
     if(gameStatus === gameStates.InProgress) {
       const keyNumToGuess = randomSounds[currentGuessIdx].keyNum;
       if(keyNumToGuess === keyCode) {
