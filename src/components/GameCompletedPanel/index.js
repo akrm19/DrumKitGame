@@ -1,7 +1,7 @@
 import React from 'react';
 import './styles.css';
-import clap from '../../assets/audio/clap.wav';
 import DuckHunt from '../../assets/gifs/giphy.gif';
+import Celebrate from '../../assets/gifs/celebrate.gif';
 
 const GameCompletePanel = (props) => {
   return ( 
@@ -9,7 +9,9 @@ const GameCompletePanel = (props) => {
     {props.wonGame &&
       <div className="gameCompletePanel wonGame">
         <div>You won the game!</div>
-        <br /> <br />
+        <br /> 
+        <img src={Celebrate} alt="Will Ferrell Celebrating" />
+        <br />
         <button className="game-button" onClick={props.restartGame} >Keep Crushing It!</button>
       </div>
     }
